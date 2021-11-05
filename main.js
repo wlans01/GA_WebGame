@@ -31,8 +31,12 @@ class Trash {
 var timer = 0;
 var trashs = [];
 
+var Jump = false;
+var JumpTimer = 0;
+var animation;
+
 function Move() {
-  requestAnimationFrame(Move);
+  animation = requestAnimationFrame(Move);
   timer++;
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -41,11 +45,44 @@ function Move() {
     var trash = new Trash();
     trashs.push(trash);
   }
-  trashs.forEach((a) => {
+  trashs.forEach((a, i, o) => {
+    if (a.x < 0) {
+      o.splice(i, 1);
+    }
     a.x--;
     a.draw();
+
+    Isover(OhDeokHoon, a);
   });
+  if (Jump == true) {
+    OhDeokHoon.y--;
+    JumpTimer++;
+  }
+  if (Jump == false && OhDeokHoon.y < 200) {
+    OhDeokHoon.y++;
+  }
+  if (JumpTimer > 100) {
+    Jump = false;
+    JumpTimer = 0;
+  }
 
   OhDeokHoon.draw();
 }
 Move();
+
+//충돌감지
+function Isover(b, a) {
+  var X_dist = a.x - (b.x + b.width);
+  var Y_dist = a.y - (b.y + b.height);
+  if (X_dist < 0 && Y_dist < 0) {
+    console.log("Game Over");
+    cancelAnimationFrame(animation);
+  }
+}
+
+//스페이스바 점프
+document.addEventListener("keydown", function (e) {
+  if (e.code == "Space" && OhDeokHoon.y === 200) {
+    Jump = true;
+  }
+});
