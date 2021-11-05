@@ -34,6 +34,7 @@ var trashs = [];
 var Jump = false;
 var JumpTimer = 0;
 var animation;
+var isGameOver = false;
 
 function Move() {
   animation = requestAnimationFrame(Move);
@@ -68,7 +69,9 @@ function Move() {
 
   OhDeokHoon.draw();
 }
-Move();
+if (!isGameOver) {
+  Move();
+}
 
 //충돌감지
 function Isover(b, a) {
@@ -77,6 +80,7 @@ function Isover(b, a) {
   if (X_dist < 0 && Y_dist < 0) {
     console.log("Game Over");
     cancelAnimationFrame(animation);
+    isGameOver = true;
   }
 }
 
