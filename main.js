@@ -1,8 +1,17 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth - 100;
-canvas.height = window.innerHeight - 100;
+canvas.width = window.innerWidth - 50;
+canvas.height = 300;
+
+var OHDeok = new Image();
+OHDeok.src = "bear1.jpg";
+
+var cup1 = new Image();
+cup1.src = " cup1.jpg";
+
+var cup2 = new Image();
+cup2.src = " cup2.jpg";
 
 var OhDeokHoon = {
   x: 10,
@@ -12,12 +21,13 @@ var OhDeokHoon = {
   draw() {
     ctx.fillStyle = "green";
     ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(OHDeok, this.x, this.y);
   },
 };
 
 class Trash {
   constructor() {
-    this.x = 500;
+    this.x = canvas.width;
     this.y = 200;
     this.width = 50;
     this.height = 50;
@@ -25,6 +35,7 @@ class Trash {
   draw() {
     ctx.fillStyle = "red";
     ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.drawImage(cup1, this.x, this.y);
   }
 }
 
